@@ -1,5 +1,9 @@
 import random
 import json
+import gtts
+import time
+
+from playsound import playsound
 
 import torch
 
@@ -73,7 +77,12 @@ def get_response(msg):
     if prob.item() > 0.75:
         for intent in intents['intents']:
             if tag == intent["tag"]:
-                return random.choice(intent['responses'])
+                response =  random.choice(intent['responses'])
+                t1 = gtts.gTTS(response)
+                t1.save("welcome.mp3")
+                playsound("./welcome.mp3", False)
+
+                return response
 
     return "I do not understand..."
 
